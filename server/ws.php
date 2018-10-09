@@ -57,3 +57,4 @@ class Ws {
         echo "client {$fd} close";
     }
 }
+$obj = new Ws();

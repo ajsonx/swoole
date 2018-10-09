@@ -6,7 +6,7 @@
 </head>
 <body>
 <script>
-    var wsServer = 'ws://127.0.0.1:9502';
+    var wsServer = 'ws://39.108.115.17:8812';
     var websocket = new WebSocket(wsServer);
     websocket.onopen = function (evt) {
     console.log("Connected to WebSocket server.");
@@ -20,9 +20,6 @@
     console.log('Retrieved data from server: ' + evt.data);
     };
 
-    websocket.onerror = function (evt, e) {
-    console.log('Error occured: ' + evt.data);
-    };
 </script>
 </body>
 </html>
