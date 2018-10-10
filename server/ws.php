@@ -7,7 +7,7 @@
  */
 
 class Ws {
-    CONST HOST = '127.0.0.1';
+    CONST HOST = "0.0.0.0";
     CONST PORT = 8812;
     public $ws = null;
 
@@ -16,14 +16,14 @@ class Ws {
      * Ws constructor.
      */
     public function __construct(){
-        $this->ws = new swoole_websocket_server(HOST,PORT);
-        $this->ws->set(
+        $this->ws = new swoole_websocket_server("0.0.0.0",8812);
+	$this->ws->set(
             [
                 'enable_static_handler' => true,
                 'document_root' => "/root/swoole_test/html",
             ]
         );
-
+	
         //添加监听事件
         $this->ws->on("open",[$this,'onOpen']);
         $this->ws->on("message",[$this,'onMessage']);
@@ -39,7 +39,7 @@ class Ws {
      * @param $request 是一个Http请求对象，包含了客户端发来的握手请求信息GET参数、Cookie、Http头信息等
      */
     public function onOpen($ws,$request){
-        var_dump($request->id);
+        var_dump($request);
     }
 
     /**
@@ -51,10 +51,10 @@ class Ws {
         echo "push-message:{$frame->data}\n";
 
         //发送消息给客户端 ->push(int $fd客户端id, $data要发送的数据, int $opcode = 1数据格式默认文本, bool $finish = true发送成功状态);
-        $ws->push($frame->fd,"server-push:".data("Ymd h:m:s"));
+        $ws->push($frame->fd,"server-push:".date("Ymd h:m:s"));
     }
     public function onClose($ws,$fd){
-        echo "client {$fd} close";
+        echo "client {$fd} close\n";
     }
 }
 $obj = new Ws();
